@@ -1,0 +1,6 @@
+.navbar-wrapper {
+  display: flex;
+
+  align-items: center;
+  background-color: #71a6db;
+}

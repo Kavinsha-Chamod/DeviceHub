@@ -1,0 +1,36 @@
+.location-card {
+  margin: 10px 0;
+  border-radius: 0;
+  border: 1px solid #ccc;
+  transition: background-color 0.5s, box-shadow 0.5s; /* Add transition for smooth hover effect */
+}
+
+.location-card:hover {
+  background-color: #71a6db; /* Change background color on hover */
+  box-shadow: 0 0 10px rgba(113, 166, 219, 0.2); /* Add box-shadow on hover */
+}
+
+.location-card .card-body {
+  padding: 10px;
+}
+
+.location-card .card-title {
+  font-size: 1.2rem;
+}
+
+.location-card .card-text {
+  font-size: 1rem;
+}
+
+.location-card .card-text span {
+  display: block;
+  margin-bottom: 5px;
+}
+.location-link {
+  text-decoration: none; /* Remove underline */
+  color: inherit; /* Inherit color from parent */
+}
+
+.location-link:hover {
+  color: #007bff; /* Change color on hover */
+}

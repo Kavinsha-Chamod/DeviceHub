@@ -1,0 +1,59 @@
+.device-card {
+  margin: 10px 10px;
+  width: 20%;
+  border-radius: 0;
+  border: 1px solid #ccc;
+  padding: 10px;
+  transition: box-shadow 0.3s; 
+}
+
+.device-card:hover {
+  box-shadow: 0 0 10px #71a6db; /* Change box shadow to red on hover */
+}
+
+.device-card .card-body {
+  padding: 10px;
+}
+
+.device-card .card-title {
+  font-size: 1.2rem;
+}
+
+.device-card .card-text {
+  font-size: 1rem;
+}
+
+.device-card .card-text span {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.image-container {
+  width: 100%;
+  position: relative;
+  height: 70%;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.status {
+  font-weight: bold;
+}
+
+.status.Active {
+  color: green;
+}
+
+.status.Inactive {
+  color: red;
+}
+
+.st {
+  color: black;
+  font-weight: bold;
+}

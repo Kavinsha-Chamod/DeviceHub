@@ -1,0 +1,10 @@
+.form-container {
+  background-color: rgb(215, 215, 215);
+  margin: 0 auto; 
+  width: 50%; 
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+.form-container .form-check{
+  margin-bottom: 10px;
+}

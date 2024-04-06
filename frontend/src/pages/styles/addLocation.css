@@ -1,0 +1,19 @@
+.device-con {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping to next row */
+  justify-content: flex-start; /* Align items to the start of the container */
+}
+
+.device-con .device-card {
+  flex: 0 0 calc(20% - 20px); /* 20% width for each card with 20px gap */
+  margin-right: 20px; /* Adjust as needed */
+  margin-bottom: 20px; /* Adjust as needed */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+

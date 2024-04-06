@@ -1,0 +1,34 @@
+.header {
+  margin-top: 20px;
+}
+
+/* view mode controls */
+.view-mode-controls {
+  margin-bottom: 20px;
+}
+
+.view-mode-controls button {
+  margin-right: 10px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  background-color: #f8f9fa;
+  cursor: pointer;
+}
+
+.view-mode-controls button.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* location list */
+.location-list {
+  display: flex;
+  flex-direction: column;
+}
+
+/* location grid */
+.location-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 20px;
+}
