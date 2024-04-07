@@ -1,6 +1,29 @@
 .navbar-wrapper {
-  display: flex;
-
-  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Ensure it appears above other content */
   background-color: #71a6db;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.navbar-brand {
+  margin-right: auto; /* Push the brand/logo to the left */
+}
+
+.navbar-nav {
+  justify-content: space-between; /* Space between menu items */
+}
+
+.nav-link {
+  margin-right: 20px; /* Add some right margin for spacing between menu items */
+}
+.ms{
+  display: relative;
+  margin-left: 80%;
 }

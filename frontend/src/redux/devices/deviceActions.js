@@ -13,6 +13,7 @@ import {
 } from "./deviceType";
 
 export const getDevices = () => async (dispatch) => {
+  
   dispatch({ type: GET_DEVICE_LOADING });
   try {
     const res = await axios(BASE_URL + "/devices", {
@@ -23,7 +24,7 @@ export const getDevices = () => async (dispatch) => {
     if (status === 1) {
       dispatch({ type: GET_DEVICE_SUCCESS, payload: data });
     } else {
-      dispatch({ type: GET_DEVICE_ERROR });
+      dispatch({ type: GET_DEVICE_ERROR, payload: message.error });
       console.log(message.error);
     }
   } catch (error) {

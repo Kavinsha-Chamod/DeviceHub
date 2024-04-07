@@ -10,9 +10,9 @@ export default function NavigationBar() {
           <Navbar.Brand href="/">DEVICE HUB</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link className='ms-4' href="/addLocation">Add Location</Nav.Link>
-            </Nav>
+            
+              <Nav.Link className='ms' href="/addLocation">Add Location</Nav.Link>
+            
           </Navbar.Collapse>
         </Container>
       </Navbar>

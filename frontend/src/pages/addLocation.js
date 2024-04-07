@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Navbar from '../components/navBar';
 import Form from 'react-bootstrap/Form';
 import { addLocation } from '../redux/locations/locationAction';
@@ -21,6 +21,35 @@ export default function AddLocation() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Validation for name field
+  if (!locationData.name.trim()) {
+    setError("Name cannot be empty");
+    return;
+  }
+
+  // Validation for address field
+  const addressRegex = /^[0-9a-zA-Z/,\s]*$/;
+  if (!locationData.address.trim()) {
+    setError("Address cannot be empty");
+    return;
+  } else if (!addressRegex.test(locationData.address)) {
+    setError("Address can only contain numbers, '/' ',' and letters");
+    return;
+  }
+
+  // Validation for phone field
+  const phoneRegex = /^\d{10}$/;
+  if (!locationData.phone.trim()) {
+    setError("Phone number cannot be empty");
+    return;
+  } else if (!phoneRegex.test(locationData.phone)) {
+    setError("Phone number must contain 10 digits and only numbers");
+    return;
+  }
+
+
+
     dispatch(addLocation(locationData));
   };
 
@@ -61,12 +90,12 @@ export default function AddLocation() {
               value={locationData.phone}
               onChange={handleInputChange}
             />
-          </Form.Group>
+            {error && <p className="text-danger">{error}</p>}
+            </Form.Group>
           <div className="btn-container">
             <button className="btn btn-primary" type="submit" disabled={loading}>
               {loading ? "Submitting..." : "Submit"}
             </button>
-            {error && <p className="text-danger">{error}</p>}
           </div>
         </Form>
       </div>

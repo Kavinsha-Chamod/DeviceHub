@@ -21,12 +21,7 @@ export default function AddDevice() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
- 
   const [selectedFile, setSelectedFile] = useState(null);
-  // const handleImageChange = (e) => {
-  //   setSelectedFile(e.target.files[0]);
-  // };
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     const allowedTypes = ["image/jpeg", "image/png", "image/gif"]; // Add more allowed types if needed
@@ -165,7 +160,6 @@ export default function AddDevice() {
             <button className="btn btn-primary" type="submit" disabled={loading}>
               {loading ? "Submitting..." : "Submit"}
             </button>
-            
           </div>
         </Form>
       </div>

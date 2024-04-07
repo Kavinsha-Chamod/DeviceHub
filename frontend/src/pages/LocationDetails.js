@@ -22,9 +22,9 @@ function LocationDetails() {
   return (
     <div><NavBar/>
     <div className="container header">
-      <h1>Location Details</h1>
+      <h1>Location Details</h1><div className='btn-container'>
       <Link to={`/devices?location=${name}`} className="btn btn-primary">Add New Device</Link>
-      </div>
+      </div></div>
       <div className="container">
       <p><h2>{name}</h2></p>
       <p><b>Address:</b> {address}</p>
