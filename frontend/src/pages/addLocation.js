@@ -1,54 +1,75 @@
-import React from 'react';
-import { useParams, useLocation } from 'react-router-dom';
-import NavBar from '../components/navBar';
-import Device from '../components/device';
-import '../pages/styles/addLocation.css';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Navbar from '../components/navBar';
+import Form from 'react-bootstrap/Form';
+import { addLocation } from '../redux/locations/locationAction';
 
-function LocationDetails() {
-  const { name } = useParams();
-  const location = useLocation();
-  const address = new URLSearchParams(location.search).get('address');
-  const phone = new URLSearchParams(location.search).get('phone');
-  const devicesJson = new URLSearchParams(location.search).get('devices');
-  console.log("Devices JSON", devicesJson);
-  let devices = [];
-  try {
-    devices = JSON.parse(devicesJson);
-  } catch (error) {
-    console.error("Error parsing",error);
-  }
+export default function AddLocation() {
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  
+  const [locationData, setLocationData] = useState({
+    name: '',
+    address: '',
+    phone: ''
+  });
+
+  const handleInputChange = (e) => {
+    setLocationData({ ...locationData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(addLocation(locationData));
+  };
 
   return (
-    <div><NavBar/>
-    <div className="container header">
-      <h1>Location Details</h1>
-      <Link to={`/devices?location=${name}`} className="btn btn-primary">Add New Device</Link>
+    <div>
+      <Navbar />
+      <div className="container header">
+        <h1>Add New Location</h1>
       </div>
-      <div className="container">
-      <p><h2>{name}</h2></p>
-      <p><b>Address:</b> {address}</p>
-      <p><b>Phone:</b> {phone}</p>
-      <p><b>Devices:</b> 
-      <div className='device-con'>
-      {devices.length > 0 ? (
-        devices.map(device => (
-          <Device
-            key={device._id}
-            serialNumber={device.serialNumber}
-            type={device.type}
-            image={device.image}
-            status={device.status}
-          />
-        ))
-      ) : (
-        <p>No devices</p>
-      )}
+      <div className="form-container">
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="name">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              type="text"
+              name="name"
+              placeholder="Enter location name"
+              value={locationData.name}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="address">
+            <Form.Label>Address</Form.Label>
+            <Form.Control
+              type="text"
+              name="address"
+              placeholder="Enter location address"
+              value={locationData.address}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="phone">
+            <Form.Label>Phone Number</Form.Label>
+            <Form.Control
+              type="text"
+              name="phone"
+              placeholder="Enter phone number"
+              value={locationData.phone}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+          <div className="btn-container">
+            <button className="btn btn-primary" type="submit" disabled={loading}>
+              {loading ? "Submitting..." : "Submit"}
+            </button>
+            {error && <p className="text-danger">{error}</p>}
+          </div>
+        </Form>
       </div>
-      </p>
-     </div>
     </div>
   );
 }
-
-export default LocationDetails;

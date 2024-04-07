@@ -43,6 +43,7 @@ export const addLocation = (obj) => async (dispatch) => {
     if (status === 1) {
       dispatch({ type: ADD_LOCATION_SUCCESS });
       dispatch(fetchLocations());
+      window.location.href="/";
     } else {
       dispatch({ type: ADD_LOCATION_ERROR });
       console.log(message.error);

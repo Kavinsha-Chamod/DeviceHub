@@ -1,10 +1,8 @@
 const express = require("express");
 const LocationModel = require("../models/LocationModel");
-
 const locationRouter = express.Router();
 locationRouter.use(express.json());
 
-// Get all locations
 locationRouter.get("/", async (req, res) => {
   try {
     const locations = await LocationModel.find().populate("devices");
@@ -17,10 +15,17 @@ locationRouter.get("/", async (req, res) => {
 locationRouter.post("/add", async (req, res) => {
   try {
     const { name, address, phone, deviceIds } = req.body;
-    const existingLocation = await LocationModel.findOne({ devices: { $in: deviceIds } });
+
+    const existingLocation = await LocationModel.findOne({ name });
     if (existingLocation) {
+      return res.status(400).send({ status: 0, message: "Location with this name already exists." });
+    }
+    
+    const existingDevices = await LocationModel.findOne({ devices: { $in: deviceIds } });
+    if (existingDevices) {
       return res.status(400).send({ status: 0, message: "One or more devices are already associated with another location." });
     }
+    
     const location = new LocationModel({
       name,
       address,
@@ -34,8 +39,6 @@ locationRouter.post("/add", async (req, res) => {
   }
 });
 
-
-// Update a location by ID
 locationRouter.patch("/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -50,7 +53,6 @@ locationRouter.patch("/:id", async (req, res) => {
   }
 });
 
-// Delete a location by ID
 locationRouter.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {

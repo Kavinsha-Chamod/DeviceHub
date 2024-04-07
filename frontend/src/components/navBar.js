@@ -11,7 +11,7 @@ export default function NavigationBar() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link className='ms-4' href="/">Location</Nav.Link>
+              <Nav.Link className='ms-4' href="/addLocation">Add Location</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
