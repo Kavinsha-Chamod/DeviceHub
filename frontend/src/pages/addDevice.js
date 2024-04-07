@@ -3,8 +3,9 @@ import NavBar from "../components/navBar";
 import Form from "react-bootstrap/Form";
 import "./styles/addDevice.css";
 import { useDispatch } from "react-redux";
-import { addDevice } from "../redux/devices/deviceActions";
+import { addDevice, uploadImage } from "../redux/devices/deviceActions";
 import { useLocation } from "react-router-dom";
+
 
 export default function AddDevice() {
   const dispatch = useDispatch();
@@ -12,13 +13,19 @@ export default function AddDevice() {
   const currentLocation = new URLSearchParams(location.search).get('location');
   const [formData, setFormData] = useState({
     serialNumber: "",
-    image: null,
+   // image: null,
     type: "",
     status: "",
     name: currentLocation
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+ 
+  const [selectedFile, setSelectedFile] = useState(null);
+  const handleImageChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -30,13 +37,18 @@ export default function AddDevice() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // if(selectedFile)  {
+    //   const formData = new FormData();
+    //   formData.append("image", selectedFile);
+    //   dispatch(uploadImage(formData));
+    // }
     setLoading(true);
     setError("");
 
     try {
       const formDataToSend = new FormData();
       formDataToSend.append("serialNumber", formData.serialNumber);
-      formDataToSend.append("image", formData.image);
+      formDataToSend.append("image", selectedFile);
       formDataToSend.append("type", formData.type);
       formDataToSend.append("status", formData.status);
       formDataToSend.append("name", formData.name);
@@ -47,7 +59,7 @@ export default function AddDevice() {
         console.log("Device added:", message);
         setFormData({
           serialNumber: "",
-          image: null,
+          //image: null,
           type: "",
           status: "",
           name: currentLocation
@@ -86,8 +98,9 @@ export default function AddDevice() {
             <Form.Label>Upload Image</Form.Label>
             <Form.Control
               type="file"
+              //accept="image/*"
               name="image"
-              onChange={handleChange}
+              onChange={handleImageChange}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="type">

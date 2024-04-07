@@ -4,7 +4,7 @@ import './styles/device.css';
 import { useDispatch } from 'react-redux';
 import { deleteDevice } from '../redux/devices/deviceActions';
 
-function Device({ serialNumber, type, image, status, imageUrl }) {
+function Device({ serialNumber, type, image, status }) {
   const dispatch = useDispatch();
   const handleRemoveDevice = () => {
     const confirmDelete = window.confirm("Are you sure you want to remove this device?");
@@ -20,7 +20,7 @@ function Device({ serialNumber, type, image, status, imageUrl }) {
       <Card.Img
         className='image-container'
         variant="top"
-        src={imageUrl}
+        src={image}
         alt="Image not available"
       />
       <Card.Body>

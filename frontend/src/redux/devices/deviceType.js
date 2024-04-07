@@ -10,3 +10,6 @@ export const DELETE_DEVICE_LOADING = "delete/device/loading"
 export const DELETE_DEVICE_SUCCESS = "delete/device/success"
 export const DELETE_DEVICE_ERROR = "delete/device/error"
 
+export const UPLOAD_DEVICE_LOADING = "update/device/loading"
+export const UPLOAD_IMAGE_SUCCESS = "upload/image/success"
+export const UPLOAD_IMAGE_ERROR = "upload/image/error"

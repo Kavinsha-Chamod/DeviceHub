@@ -5,26 +5,27 @@ const LocationModel = require('../models/LocationModel');
 const deviceRouter = express.Router();
 deviceRouter.use(express.json());
 const sharp = require('sharp');
-const path = require('path');
+const multerStorage = multer.memoryStorage(); // Rename multer storage variable
+const upload = multer({ storage: multerStorage,
+  fileFilter: (req, file, cb) => {
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+      return cb(new Error('Only image files are allowed'));
+    }
+    cb(null, true);
+  } }); 
 
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/');
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  }
-});
-
-const upload = multer({ storage: storage });
-
-deviceRouter.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+const { Storage } = require('@google-cloud/storage');
+const gcsStorage = new Storage({ keyFilename: 'C:/HND/endless-tractor-419520-4014ae5d806a.json' }); // Rename Google Cloud Storage variable
+const bucket = gcsStorage.bucket('device_hub'); // Use renamed Google Cloud Storage variable
 
 deviceRouter.get('/', async (req, res) => {
   try {
     const devices = await DeviceModel.find();
-    res.json(devices);
+    const devicesWithImages = await Promise.all(devices.map(async (device) => {
+      const imageUrl = await getImageUrl(device.image);
+      return { ...device.toObject(), imageUrl };
+    }));
+    res.json(devicesWithImages);
   } catch (error) {
     res.status(500).send({ status: 0, message: error.message });
   }
@@ -35,9 +36,29 @@ deviceRouter.post('/add', upload.single('image'), async (req, res) => {
     if (!req.file) {
       return res.status(400).send('Please upload an image');
     }
-    
+
+    const processedImage = await sharp(req.file.buffer).toFormat('jpeg').toBuffer();
+    const fileName = `${Date.now()}-${req.file.originalname}`;
+    const file = bucket.file(fileName);
+    await file.save(processedImage);
+    const imageUrl = `https://storage.googleapis.com/device_hub/${fileName}`;
+
     const { serialNumber, type, status, name } = req.body;
-    const imageUrl = `/uploads/${req.file.filename}`;
+
+    if (!serialNumber) {
+      return res.status(400).send({ status: 0, message: 'Serial number is required' });
+    }
+    // Check if serial number already exists
+    const existingDevice = await DeviceModel.findOne({ serialNumber });
+    if (existingDevice) {
+      return res.status(400).send({ status: 0, message: 'Serial number already exists' });
+    }
+    // Validate serial number format (no special characters)
+    const serialNumberRegex = /^[a-zA-Z0-9\-_]+$/;
+    if (!serialNumberRegex.test(serialNumber)) {
+      return res.status(400).send({ status: 0, message: 'Serial number cannot contain special characters' });
+    }
+
     const newDevice = new DeviceModel({
       serialNumber,
       type,
@@ -46,7 +67,7 @@ deviceRouter.post('/add', upload.single('image'), async (req, res) => {
     });
 
     const savedDevice = await newDevice.save();
-    const locations = await LocationModel.findOne({ name: name});
+    const locations = await LocationModel.findOne({ name });
 
     if (!locations) {
       return res.status(404).send({ status: 0, message: 'Location not found' });
@@ -61,6 +82,16 @@ deviceRouter.post('/add', upload.single('image'), async (req, res) => {
   }
 });
 
+async function getImageUrl(imagePath) {
+  try {
+    const [metadata] = await bucket.file(imagePath).getMetadata();
+    console.log("Image -",metadata);
+    return metadata.mediaLink;
+  } catch (error) {
+    console.error('Error fetching image URL:', error);
+    return null;
+  }
+}
 
 deviceRouter.delete('/:serialNumber', async (req, res) => {
   const { serialNumber } = req.params;
