@@ -39,32 +39,4 @@ locationRouter.post("/add", async (req, res) => {
   }
 });
 
-locationRouter.patch("/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const response = await LocationModel.findByIdAndUpdate(id, req.body, { new: true });
-    if (response) {
-      res.status(200).send({ status: 1, message: "Location updated", data: response });
-    } else {
-      res.status(404).send({ status: 0, message: "Location not found" });
-    }
-  } catch (error) {
-    res.status(500).send({ status: 0, message: error.message });
-  }
-});
-
-locationRouter.delete("/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const response = await LocationModel.findByIdAndDelete(id);
-    if (response) {
-      res.status(200).send({ status: 1, message: "Location deleted" });
-    } else {
-      res.status(404).send({ status: 0, message: "Location not found" });
-    }
-  } catch (error) {
-    res.status(500).send({ status: 0, message: error.message });
-  }
-});
-
 module.exports = locationRouter;

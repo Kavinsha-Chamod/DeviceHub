@@ -62,6 +62,7 @@ export const deleteLocation = (locationId) => async (dispatch) => {
     if (status === 1) {
       dispatch({ type: DELETE_LOCATION_SUCCESS });
       dispatch(fetchLocations());
+      window.location.href = "/";
     } else {
       dispatch({ type: DELETE_LOCATION_ERROR });
       console.log(message.error);

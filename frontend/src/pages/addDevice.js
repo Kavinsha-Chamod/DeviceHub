@@ -3,7 +3,7 @@ import NavBar from "../components/navBar";
 import Form from "react-bootstrap/Form";
 import "./styles/addDevice.css";
 import { useDispatch } from "react-redux";
-import { addDevice, uploadImage } from "../redux/devices/deviceActions";
+import { addDevice } from "../redux/devices/deviceActions";
 import { useLocation } from "react-router-dom";
 
 
@@ -37,11 +37,6 @@ export default function AddDevice() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if(selectedFile)  {
-    //   const formData = new FormData();
-    //   formData.append("image", selectedFile);
-    //   dispatch(uploadImage(formData));
-    // }
     setLoading(true);
     setError("");
 
@@ -67,10 +62,10 @@ export default function AddDevice() {
       } else {
         console.error("Failed to add device:", message);
         setError(message);
+        setError("An error occurred while adding the device.");
       }
     } catch (error) {
       console.error("Failed to add device:", error);
-      setError("An error occurred while adding the device.");
     } finally {
       setLoading(false);
     }
@@ -129,13 +124,12 @@ export default function AddDevice() {
               <option value="Active">Active</option>
               <option value="Inactive">Inactive</option>
             </Form.Control>
+            {error && <p className="text-danger">{error}</p>}
           </Form.Group>
-
           <div className="btn-container">
             <button className="btn btn-primary" type="submit" disabled={loading}>
               {loading ? "Submitting..." : "Submit"}
             </button>
-            {error && <p className="text-danger">{error}</p>}
           </div>
         </Form>
       </div>

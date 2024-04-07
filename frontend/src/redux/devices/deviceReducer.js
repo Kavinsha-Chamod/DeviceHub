@@ -8,9 +8,6 @@ import {
   DELETE_DEVICE_LOADING,
   DELETE_DEVICE_SUCCESS,
   DELETE_DEVICE_ERROR,
-  UPLOAD_DEVICE_LOADING,
-  UPLOAD_IMAGE_SUCCESS,
-  UPLOAD_IMAGE_ERROR
 } from "./deviceType";
 
 let initialState = {
@@ -72,24 +69,6 @@ export const deviceReducer = (state = initialState, action) => {
         error: false ,
       };
     case DELETE_DEVICE_ERROR:
-      return {
-        ...state,
-        loading: false,
-        error: true,
-      };
-    case UPLOAD_DEVICE_LOADING:
-      return {
-        ...state,
-        loading: true,
-      };
-    case UPLOAD_IMAGE_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        imageDataUrl: action.imageUrl,
-        error: false,
-      };
-    case UPLOAD_IMAGE_ERROR:
       return {
         ...state,
         loading: false,

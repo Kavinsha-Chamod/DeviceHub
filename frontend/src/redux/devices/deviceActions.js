@@ -9,10 +9,7 @@ import {
   ADD_DEVICE_ERROR,
   DELETE_DEVICE_LOADING,
   DELETE_DEVICE_SUCCESS,
-  DELETE_DEVICE_ERROR,
-  UPLOAD_DEVICE_LOADING,
-  UPLOAD_IMAGE_SUCCESS,
-  UPLOAD_IMAGE_ERROR
+  DELETE_DEVICE_ERROR
 } from "./deviceType";
 
 export const getDevices = () => async (dispatch) => {
@@ -75,12 +72,3 @@ export const deleteDevice = (serialNumber) => async (dispatch) => {
     dispatch({ type: DELETE_DEVICE_ERROR });
   }
 };
-
-// export const uploadImage = (formData) => async (dispatch) => {
-//   try {
-//     const response = await axios.post(BASE_URL+'devices/add', formData);
-//     dispatch({ type: UPLOAD_IMAGE_SUCCESS, imageUrl: response.data.imageUrl });
-//   } catch (error) {
-//     dispatch({ type: UPLOAD_IMAGE_ERROR, error: error.message });
-//   }
-// };

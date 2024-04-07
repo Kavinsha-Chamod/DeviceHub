@@ -32,7 +32,7 @@ function Device({ serialNumber, type, image, status }) {
             <b className='st'>Status:</b>{status}
           </span>
           <div className='btn-container'>
-            <button className='btn btn-primary' onClick={handleRemoveDevice}>Remove</button>
+            <button className='btn btn-primary btn-red' onClick={handleRemoveDevice}>Remove</button>
           </div>
         </Card.Text>
       </Card.Body>

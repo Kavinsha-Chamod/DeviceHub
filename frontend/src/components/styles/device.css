@@ -8,7 +8,7 @@
 }
 
 .device-card:hover {
-  box-shadow: 0 0 10px #71a6db; /* Change box shadow to red on hover */
+  box-shadow: 0 0 5px #71a6db; /* Change box shadow to red on hover */
 }
 
 .device-card .card-body {
@@ -56,4 +56,15 @@
 .st {
   color: black;
   font-weight: bold;
+}
+
+.btn-red{
+  background-color: #ff0000;
+  border-color: #ff0000;
+  color: white;
+}
+.btn-red:hover{
+  background-color: #f65252;
+  border-color: #f65252;
+  color: white;
 }
