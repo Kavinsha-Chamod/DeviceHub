@@ -23,8 +23,20 @@ export default function AddDevice() {
 
  
   const [selectedFile, setSelectedFile] = useState(null);
+  // const handleImageChange = (e) => {
+  //   setSelectedFile(e.target.files[0]);
+  // };
+
   const handleImageChange = (e) => {
-    setSelectedFile(e.target.files[0]);
+    const file = e.target.files[0];
+    const allowedTypes = ["image/jpeg", "image/png", "image/gif"]; // Add more allowed types if needed
+    if (file && allowedTypes.includes(file.type)) {
+      setSelectedFile(file);
+      setError(""); // Clear any previous error messages
+    } else {
+      setSelectedFile(null);
+      setError("Please select a valid image file (JPEG, PNG, or GIF).");
+    }
   };
 
   const handleChange = (e) => {
@@ -39,6 +51,30 @@ export default function AddDevice() {
     e.preventDefault();
     setLoading(true);
     setError("");
+
+    if (!formData.serialNumber) {
+      setError("Please enter the serial number.");
+      setLoading(false);
+      return;
+    }
+
+    if (!/^[a-zA-Z0-9]*$/.test(formData.serialNumber)) {
+      setError("Serial number can only contain letters and numbers.");
+      setLoading(false);
+      return;
+    }
+
+    if (!formData.type) {
+      setError("Please select the device type.");
+      setLoading(false);
+      return;
+    }
+
+    if (!formData.status) {
+      setError("Please select the device status.");
+      setLoading(false);
+      return;
+    }
 
     try {
       const formDataToSend = new FormData();
@@ -61,11 +97,10 @@ export default function AddDevice() {
         });
       } else {
         console.error("Failed to add device:", message);
-        setError(message);
-        setError("An error occurred while adding the device.");
       }
     } catch (error) {
       console.error("Failed to add device:", error);
+      setError("Please fill all the fields and try again");
     } finally {
       setLoading(false);
     }
@@ -130,6 +165,7 @@ export default function AddDevice() {
             <button className="btn btn-primary" type="submit" disabled={loading}>
               {loading ? "Submitting..." : "Submit"}
             </button>
+            
           </div>
         </Form>
       </div>
