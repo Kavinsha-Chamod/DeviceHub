@@ -1,13 +1,13 @@
 .device-con {
   display: flex;
-  flex-wrap: wrap; /* Allow wrapping to next row */
-  justify-content: flex-start; /* Align items to the start of the container */
+  flex-wrap: wrap; 
+  justify-content: flex-start; 
 }
 
 .device-con .device-card {
-  flex: 0 0 calc(20% - 20px); /* 20% width for each card with 20px gap */
-  margin-right: 20px; /* Adjust as needed */
-  margin-bottom: 20px; /* Adjust as needed */
+  flex: 0 0 calc(20% - 20px); 
+  margin-right: 20px;
+  margin-bottom: 20px;
 }
 
 .header {
@@ -18,7 +18,6 @@
 }
 
 .btn-container {
-  margin-right:  10%;
   display: flex;
   justify-content: flex-end;
 }

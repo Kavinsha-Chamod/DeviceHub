@@ -8,12 +8,7 @@ export default function NavigationBar() {
       <Navbar>
         <Container className="justify-content-center">
           <Navbar.Brand href="/">DEVICE HUB</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            
               <Nav.Link className='ms' href="/addLocation">Add Location</Nav.Link>
-            
-          </Navbar.Collapse>
         </Container>
       </Navbar>
     </div>

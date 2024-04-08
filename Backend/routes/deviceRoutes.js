@@ -93,6 +93,31 @@ async function getImageUrl(imagePath) {
   }
 }
 
+deviceRouter.patch('/update', async (req, res) => {
+  try {
+    const { serialNumber, status } = req.body;
+
+    if (!serialNumber) {
+      return res.status(400).send({ status: 0, message: 'Serial number is required' });
+    }
+
+    // Find the device by serial number
+    const existingDevice = await DeviceModel.findOne({ serialNumber });
+    if (!existingDevice) {
+      return res.status(404).send({ status: 0, message: 'Device not found' });
+    }
+
+    // Update the device status
+    existingDevice.status = status;
+    await existingDevice.save();
+
+    res.send({ status: 1, message: 'Device status updated successfully', data: existingDevice });
+  } catch (error) {
+    res.status(400).send({ status: 0, message: error.message });
+  }
+});
+      
+
 deviceRouter.delete('/:serialNumber', async (req, res) => {
   const { serialNumber } = req.params;
   try {

@@ -7,6 +7,9 @@ import {
   ADD_DEVICE_LOADING,
   ADD_DEVICE_SUCCESS,
   ADD_DEVICE_ERROR,
+  UPDATE_DEVICE_LOADING,
+  UPDATE_DEVICE_SUCCESS,
+  UPDATE_DEVICE_ERROR,
   DELETE_DEVICE_LOADING,
   DELETE_DEVICE_SUCCESS,
   DELETE_DEVICE_ERROR
@@ -53,6 +56,34 @@ export const addDevice = (formData) => async (dispatch) => {
     dispatch({ type: ADD_DEVICE_ERROR });
   }
 };
+
+// deviceActions.js
+
+export const updateDeviceStatus = (serialNumber, newStatus) => async (dispatch) => {
+  dispatch({ type: UPDATE_DEVICE_LOADING });
+  try {
+    const res = await fetch(BASE_URL +'/devices/update', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ serialNumber, status: newStatus }),
+    });
+
+    if (!res.ok) {
+      throw new Error('Failed to update device status');
+    }
+
+    // Dispatch action to update device status in Redux store
+    dispatch({ type: UPDATE_DEVICE_SUCCESS, payload: { serialNumber, newStatus } });
+    window.location.href = '/';
+  } catch (error) {
+    console.error('Error updating device status:', error.message);
+    // Dispatch action to handle error
+    dispatch({ type: UPDATE_DEVICE_ERROR, error: error.message });
+  }
+};
+
 
 export const deleteDevice = (serialNumber) => async (dispatch) => {
   dispatch({ type: DELETE_DEVICE_LOADING });

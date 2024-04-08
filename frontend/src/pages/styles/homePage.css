@@ -2,9 +2,49 @@
   margin-top: 20px;
 }
 
-/* view mode controls */
-.view-mode-controls {
-  margin-bottom: 20px;
+.location-list {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.location-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 20px;
+  width: 100%;
+  padding-right: 7%;
+  padding-left: 7%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.location-card {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 20px;
+}
+
+.location-card h3 {
+  margin-top: 0;
+}
+
+.location-card p {
+  margin: 0;
+}
+.no-locations-message .p{
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.txt-center {
+  text-align: center;
+  margin-right: 10px;
 }
 
 .view-mode-controls button {
@@ -12,7 +52,9 @@
   padding: 5px 10px;
   border: 1px solid #ccc;
   background-color: #f8f9fa;
+  border-radius: 15x;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .view-mode-controls button.active {
@@ -20,15 +62,21 @@
   color: #fff;
 }
 
-/* location list */
-.location-list {
-  display: flex;
-  flex-direction: column;
+.search-bar {
+  width: 550px;
+  margin-left: 20%;
 }
 
-/* location grid */
-.location-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-gap: 20px;
+.search-bar input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
 }
+
+.search-bar input[type="text"]::placeholder {
+  color: #aaa;
+}
+

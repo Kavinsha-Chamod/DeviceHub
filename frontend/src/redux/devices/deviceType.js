@@ -6,6 +6,10 @@ export const ADD_DEVICE_LOADING = "add/device/loading"
 export const ADD_DEVICE_SUCCESS = "add/device/success"
 export const ADD_DEVICE_ERROR = "add/device/error"
 
+export const UPDATE_DEVICE_LOADING = "update/device/loading"
+export const UPDATE_DEVICE_SUCCESS = "update/device/success"
+export const UPDATE_DEVICE_ERROR = "update/device/error"
+
 export const DELETE_DEVICE_LOADING = "delete/device/loading"
 export const DELETE_DEVICE_SUCCESS = "delete/device/success"
 export const DELETE_DEVICE_ERROR = "delete/device/error"

@@ -8,6 +8,9 @@ import {
   DELETE_DEVICE_LOADING,
   DELETE_DEVICE_SUCCESS,
   DELETE_DEVICE_ERROR,
+  UPDATE_DEVICE_LOADING,
+  UPDATE_DEVICE_SUCCESS,
+  UPDATE_DEVICE_ERROR,
 } from "./deviceType";
 
 let initialState = {
@@ -56,6 +59,23 @@ export const deviceReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: true,
+      };
+    case UPDATE_DEVICE_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_DEVICE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: false,
+      };
+    case UPDATE_DEVICE_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       };
     case DELETE_DEVICE_LOADING:
       return {

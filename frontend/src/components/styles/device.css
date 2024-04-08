@@ -68,3 +68,13 @@
   border-color: #f65252;
   color: white;
 }
+.btn-green{
+  background-color: #008200;
+  border-color: #008200;
+  color: white;
+}
+.btn-green:hover{
+  background-color: #52f652;
+  border-color: #52f652;
+  color: white;
+}
