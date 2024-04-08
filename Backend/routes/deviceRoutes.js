@@ -85,10 +85,8 @@ deviceRouter.post('/add', upload.single('image'), async (req, res) => {
 async function getImageUrl(imagePath) {
   try {
     const [metadata] = await bucket.file(imagePath).getMetadata();
-    console.log("Image -",metadata);
     return metadata.mediaLink;
   } catch (error) {
-    console.error('Error fetching image URL:', error);
     return null;
   }
 }
@@ -100,14 +98,10 @@ deviceRouter.patch('/update', async (req, res) => {
     if (!serialNumber) {
       return res.status(400).send({ status: 0, message: 'Serial number is required' });
     }
-
-    // Find the device by serial number
     const existingDevice = await DeviceModel.findOne({ serialNumber });
     if (!existingDevice) {
       return res.status(404).send({ status: 0, message: 'Device not found' });
     }
-
-    // Update the device status
     existingDevice.status = status;
     await existingDevice.save();
 

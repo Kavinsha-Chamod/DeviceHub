@@ -57,8 +57,6 @@ export const addDevice = (formData) => async (dispatch) => {
   }
 };
 
-// deviceActions.js
-
 export const updateDeviceStatus = (serialNumber, newStatus) => async (dispatch) => {
   dispatch({ type: UPDATE_DEVICE_LOADING });
   try {

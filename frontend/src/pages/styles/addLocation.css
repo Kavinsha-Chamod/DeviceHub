@@ -1,11 +1,10 @@
 .device-con {
   display: flex;
   flex-wrap: wrap; 
-  justify-content: flex-start; 
+  justify-content:center; 
 }
 
-.device-con .device-card {
-  flex: 0 0 calc(20% - 20px); 
+.device-con .device-card { 
   margin-right: 20px;
   margin-bottom: 20px;
 }
@@ -20,9 +19,16 @@
 .btn-container {
   display: flex;
   justify-content: flex-end;
+  
 }
 
 .btn-container .btn{
-  margin-left: 1px;
+  margin-left: 10px;
   flex-direction: row;
+}
+
+#dropdown-basic-button{
+  background-color: #f8f9fa;
+  color: #000;
+  border: 2px solid #ced4da;
 }

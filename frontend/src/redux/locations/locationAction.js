@@ -53,10 +53,33 @@ export const addLocation = (obj) => async (dispatch) => {
   }
 }
 
-export const deleteLocation = (locationId) => async (dispatch) => {
+export const updateLocation = (name, obj) => async (dispatch) => {
+  dispatch({ type: ADD_LOCATION_LOADING });
+  try {
+    const res = await axios(BASE_URL + "/locations/update/" + name, {
+      method: "PATCH",
+      data: obj,
+    });
+    const { status, message } = res.data;
+    console.log(res.data);
+    if (status === 1) {
+      dispatch({ type: ADD_LOCATION_SUCCESS });
+      dispatch(fetchLocations());
+      window.location.href = "/";
+    } else {
+      dispatch({ type: ADD_LOCATION_ERROR });
+      console.log(message.error);
+    }
+  } catch (error) {
+    dispatch({ type: ADD_LOCATION_ERROR });
+  }
+}
+
+export const deleteLocation = (name) => async (dispatch) => {
+  console.log("Delete location:", name);
   dispatch({ type: DELETE_LOCATION_LOADING });
   try {
-    const res = await axios.delete(BASE_URL + "/locations/" + locationId);
+    const res = await axios.delete(BASE_URL + "/locations/delete/" + name);
     const { status, message } = res.data;
     console.log(res.data);
     if (status === 1) {
