@@ -45,11 +45,11 @@ export const addLocation = (obj) => async (dispatch) => {
       dispatch(fetchLocations());
       window.location.href="/";
     } else {
-      dispatch({ type: ADD_LOCATION_ERROR });
+      dispatch({ type: ADD_LOCATION_ERROR, payload:{error:message} });
       console.log(message.error);
     }
   } catch (error) {
-    dispatch({ type: ADD_LOCATION_ERROR });
+    dispatch({ type: ADD_LOCATION_ERROR, payload:{error:error.message} });
   }
 }
 

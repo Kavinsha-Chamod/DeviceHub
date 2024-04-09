@@ -14,6 +14,7 @@ function LocationDetails() {
   const { name } = useParams();
   const location = useLocation();
   const dispatch = useDispatch();
+  const [error, setError] = useState("");
   const [locationData, setLocationData] = useState({});
   const address = new URLSearchParams(location.search).get('address');
   const phone = new URLSearchParams(location.search).get('phone');
@@ -26,6 +27,7 @@ function LocationDetails() {
     address: '',
     phone: ''
   });
+  const locationError = useSelector(state => state.locationReducer.error);
 
   console.log("Devices JSON", devicesJson);
   let devices = [];
@@ -60,6 +62,38 @@ function LocationDetails() {
   };
 
   const handleUpdateLocation = () => {
+    // Clear previous errors
+    setError("");
+
+    // Validation for name field
+    let nameValue = newLocationData.name || locationData.name;
+if (!nameValue.trim()) {
+  setError("Name cannot be empty");
+  return;
+}
+
+    // Validation for address field
+    const addressRegex = /^[0-9a-zA-Z/,\s]*$/;
+    let addressValue = newLocationData.address || locationData.address;
+    if (!addressValue.trim()) {
+      setError("Address cannot be empty");
+      return;
+    } else if (!addressRegex.test(addressValue)) {
+      setError("Address can only contain numbers, '/', ',' and letters");
+      return;
+    }
+
+    // Validation for phone field
+    const phoneRegex = /^\d{10}$/;
+    if (!newLocationData.phone.trim()) {
+      setError("Phone number cannot be empty");
+      return;
+    } else if (!phoneRegex.test(newLocationData.phone)) {
+      setError("Phone number must contain 10 digits and only numbers");
+      return;
+    }
+
+    // Dispatch the updateLocation action
     dispatch(updateLocation(name, newLocationData));
     handleCloseUpdateModal();
   };
@@ -76,10 +110,10 @@ function LocationDetails() {
       <div className="container header">
         <h1>Location Details</h1>
         <div className='btn-container'>
-        <DropdownButton id="dropdown-basic-button" title="Manage Location">
-        <Dropdown.Item onClick={handleOpenUpdateModal}>Update Location</Dropdown.Item>
-        <Dropdown.Item onClick={handleDeleteLocation}>Delete Location</Dropdown.Item>
-      </DropdownButton>
+          <DropdownButton id="dropdown-basic-button" title="Manage Location">
+            <Dropdown.Item onClick={handleOpenUpdateModal}>Update Location</Dropdown.Item>
+            <Dropdown.Item onClick={handleDeleteLocation}>Delete Location</Dropdown.Item>
+          </DropdownButton>
           <Link to={`/devices?location=${name}`} className="btn btn-primary">Add New Device</Link>
         </div>
       </div>
@@ -120,14 +154,23 @@ function LocationDetails() {
             <Form.Group controlId="formLocationName">
               <Form.Label>Location Name</Form.Label>
               <Form.Control type="text" name="name" value={newLocationData.name || locationData.name} onChange={handleInputChange} />
+              {error && newLocationData.name && newLocationData.name !== locationData.name && (
+                <p className="text-danger">{error}</p>
+              )}
             </Form.Group>
             <Form.Group controlId="formLocationAddress">
               <Form.Label>Address</Form.Label>
               <Form.Control type="text" name="address" value={newLocationData.address || locationData.address} onChange={handleInputChange} />
+              {error && newLocationData.address && newLocationData.address !== locationData.address && (
+                <p className="text-danger">{error}</p>
+              )}
             </Form.Group>
             <Form.Group controlId="formLocationPhone">
               <Form.Label>Phone</Form.Label>
               <Form.Control type="text" name="phone" value={newLocationData.phone || locationData.phone} onChange={handleInputChange} />
+              {error && newLocationData.phone && newLocationData.phone !== locationData.phone && (
+                <p className="text-danger">{error}</p>
+              )}
             </Form.Group>
           </Form>
         </Modal.Body>

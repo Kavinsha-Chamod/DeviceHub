@@ -20,7 +20,6 @@ function Device({ serialNumber, type, image, status }) {
   };
 
   const handleUpdateDevice = () => {
-    // Dispatch action to update device status
     dispatch(updateDeviceStatus(serialNumber, newStatus));
     handleCloseUpdateModal();
   };

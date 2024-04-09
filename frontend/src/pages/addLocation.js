@@ -48,8 +48,6 @@ export default function AddLocation() {
     return;
   }
 
-
-
     dispatch(addLocation(locationData));
   };
 
